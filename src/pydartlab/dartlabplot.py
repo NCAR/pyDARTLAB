@@ -169,6 +169,8 @@ class TwodEnsemble(DartLabPlot):
         self.ax1.grid(True)
         self.ax1.set_xlim(0, 10)
         self.ax1.set_ylim(0, 10)
+        self.ax1.set_xticklabels([])
+        self.ax1.set_yticklabels([])
 
         # Get the limits of ax1
         self.x_limits_ax1 = ax1.get_xlim()
@@ -212,8 +214,8 @@ class TwodEnsemble(DartLabPlot):
         self.ax1.grid(True)
         self.ax1.set_xlim(0, 10)
         self.ax1.set_ylim(0, 10)
-        #ax1.set_xticklabels([])
-        #ax1.set_yticklabels([])
+        self.ax1.set_xticklabels([])
+        self.ax1.set_yticklabels([])
         self.ax2.set_xlabel('Observed quantity')
         self.ax2.grid(True)
         self.ax2.set_xlim(self.x_limits_ax1)
