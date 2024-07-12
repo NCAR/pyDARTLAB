@@ -58,7 +58,6 @@ class DartLabPlot:
         ax.set_ylabel('Observation Likelihood')
         self.obs_ax = ax
 
-
     def add_filter_options(self, position): # [left, bottom, width, height]
         # Check if position is a list and has exactly four elements
         if not isinstance(position, list) or len(position) != 4:
@@ -146,8 +145,6 @@ class DartLabPlot:
             self.inflation_enabled = self.check_button.get_status()[0]
             print(f"Inflation enabled: {self.inflation_enabled}")
             # Update your plot or parameters here based on the inflation_enabled state
-
-
 
     def update_ensemble(self, event):
         print("does nothing")
