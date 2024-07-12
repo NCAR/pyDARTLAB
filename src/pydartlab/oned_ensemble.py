@@ -2,7 +2,8 @@ import matplotlib.pyplot as plt
 import dartlabplot as dlp
 import matplotlib.gridspec as gridspec
 
-# %matplotlib widget  # for notebook
+# for notebook
+# %matplotlib widget  
 
 # Create figure
 fig = plt.figure(figsize=(10, 8))
@@ -10,8 +11,6 @@ fig.canvas.header_visible = False
 
 # Define GridSpec
 gs = gridspec.GridSpec(4, 3, figure=fig)
-
-
 
 # Create subplots of varying sizes and shapes
 ax1 = fig.add_subplot(gs[0:3, 0:2]) 
@@ -21,7 +20,7 @@ ax1.set_ylim(-0.4, 1)
 mu = 1
 sigma = 1
 
-plotter = dlp.OnedEnsemble(fig, ax1, mu, sigma,[-2, 4], [-0.4, 1])
+plotter = dlp.OnedEnsemble(fig, ax1, mu, sigma,[-2, 4], [-0.4, 0.8])
 
 plotter.add_filter_options([0.65, 0.68, 0.2, 0.2])
 plotter.add_update_button([0.65, 0.3, 0.2, 0.1])

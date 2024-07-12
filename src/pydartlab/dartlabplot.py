@@ -312,9 +312,13 @@ class OnedEnsemble(DartLabPlot):
         self.sigma = sigma
         self.mu = mu
         self.x_limits = x_limits
-        self.ax1.set_xlim(-2, 4)     # these are reset in update mu & update sigma
-        self.ax1.set_ylim(-0.4, 1)
+        self.y_limits = y_limits
+        self.ax1.set_xlim(*self.x_limits)     # these are reset in update mu & update sigma
+        self.ax1.set_ylim(*self.y_limits)
+        self.ax1.axhline(y=-0.2, color='k', linestyle='-')
         self.plot_observation(self.ax1, self.mu, self.sigma)
+        self.inflation_enabled = False
+        self.inflation_factor = 1.0
 
         self.fig.canvas.mpl_connect('button_press_event', self.on_click)
 
@@ -338,7 +342,9 @@ class OnedEnsemble(DartLabPlot):
         zeros_array = np.zeros(len(x_list))
 
         self.ax1.clear()
-        self.ax1.set_ylim(bottom=-0.2)
+        self.ax1.set_ylim(*self.y_limits)
+        self.ax1.set_xlim(*self.x_limits)
+        self.ax1.axhline(y=-0.2, color='k', linestyle='-')
 
         self.plot_observation(self.ax1, self.mu, self.sigma)
         self.ax1.plot(x_list, zeros_array, 'go')
@@ -361,10 +367,32 @@ class OnedEnsemble(DartLabPlot):
         if self.inflation_enabled:
             # Apply inflation to the ensemble
             inf_x = (x_list - x_list.mean())* math.sqrt(self.inflation_factor) + x_list.mean()
+            z_plot_inf_x = [element - 0.2 for i, element in enumerate(zeros_array)]
+            self.ax1.plot(inf_x, z_plot_inf_x, 'go')
+            # Calculate the observation increments for the inflated ensemble
+            if self.current_filter_selection == 'EAKF':
+                obs_increments = obs_increment_eakf(np.array(inf_x), self.mu, self.sigma**2)
+            elif self.current_filter_selection == 'EnKF':
+                obs_increments = obs_increment_enkf(np.array(inf_x), self.mu, self.sigma**2)
+            elif self.current_filter_selection == 'RHF':
+                obs_increments = obs_increment_rhf(np.array(inf_x), self.mu, self.sigma**2)
+
+            updated_x_inf = inf_x + obs_increments
+
+            z_plot_inf = [element - 0.3 for i, element in enumerate(zeros_array)]
+            self.ax1.plot(updated_x_inf, z_plot_inf, 'y*')
+ 
+            # plot inflation increment lines
+            for i, _ in enumerate(inf_x):
+                self.ax1.plot([inf_x[i], updated_x_inf[i]], [zeros_array[i]-0.2, zeros_array[i]-0.3], 'y-')
+            
+
 
         # plot increment lines
         for i, _ in enumerate(updated_x):
             self.ax1.plot([x_list[i], updated_x[i]], [zeros_array[i], zeros_array[i]-0.1], 'b-')
+
+       
 
         plt.draw()  # Redraw the figure to reflect changes
     
