@@ -1,0 +1,29 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pydartlab"
+version = "0.0.1a"
+authors = [
+  { name="Helen Kershaw", email="hkershaw@ucar.edu" },
+]
+description = "A python version of DARTLAB"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "matplotlib==3.9.1"
+]
+
+[project.urls]
+Homepage = "https://github.com/NCAR/pyDARTLAB"
+Issues = "https://github.com/NCAR/pyDARTLAB/issues"
+# Documentation = "https://ncar.github.io/pyDARTLAB"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pyDARTLAB"]

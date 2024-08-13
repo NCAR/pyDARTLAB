@@ -394,6 +394,8 @@ class OnedEnsemble(DartLabPlot):
         plt.draw()  # Redraw the figure to reflect changes
     
 
+
+
 class Lorenz96(DartLabPlot):
     def __init__(self, fig, ax1, ax2, ax3, ax4):
         x_limits = [0, 10]
