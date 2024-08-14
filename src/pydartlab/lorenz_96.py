@@ -19,7 +19,6 @@ class Lorenz96:
         __init__(self, model_size=36, delta_t=0.01, forcing=8.0): Initializes a new instance of the Lorenz96 model 
                                                                 with optional parameters for model size, time step, 
                                                                 and external forcing.
-        step(self): Advances the model state by one time step using a numerical integration scheme.
     """
     def __init__(self, model_size=40, delta_t=0.05, forcing=8):
         """
@@ -36,7 +35,7 @@ class Lorenz96:
 
     def step(self, x):
         """
-        Does a single time step advance for Lorenz 96 40-variable model using four-step Runge-Kutta time step.
+        Does a single time step advance for Lorenz 96  model using four-step Runge-Kutta time step.
         
         Parameters:
         - x: The model_size state.

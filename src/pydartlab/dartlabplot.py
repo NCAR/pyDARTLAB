@@ -32,7 +32,22 @@ class ObservationStyle:
     markersize: int = 12
 
 class DartLabPlot:
+    """
+    A class used to create and manage plots for the DartLab project.
 
+    This class provides methods to initialize the plot, set x-axis limits, and plot observations 
+    with specified styles. It also maintains the state of the current filter selection and 
+    clicked points on the plot.
+
+    Attributes:
+        fig (matplotlib.figure.Figure): The figure object to be used for plotting.
+        x_limits (tuple): A tuple specifying the x-axis limits (min, max).
+        current_filter_selection (str): The current filter selection, default is 'EAKF'.
+        clicked_points (list): A list to store points clicked on the plot.
+        mu (float): The mean value for some distribution, default is 0.
+        sigma (float): The standard deviation for some distribution, default is 1.
+
+    """
     def __init__(self, fig, x_limits):
         self.fig = fig # do you want the figure?
         self.x_limits = x_limits # Helen do you want this?
@@ -42,6 +57,21 @@ class DartLabPlot:
         self.sigma = 1
 
     def plot_observation(self, ax, mu, sigma):
+        """
+        Plots an observation on the given axis with a normal distribution curve.
+
+        This method generates a normal distribution curve based on the provided mean (mu) and 
+        standard deviation (sigma), and plots it on the specified axis. It also formats the y-axis 
+        to hide negative numbers and adds a horizontal line at y=0.
+
+        Args:
+            ax (matplotlib.axes.Axes): The axis on which to plot the observation.
+            mu (float): The mean value of the normal distribution.
+            sigma (float): The standard deviation of the normal distribution.
+
+        Returns:
+            None
+        """
    
         # Generate x values
         x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
@@ -150,6 +180,9 @@ class DartLabPlot:
         print("does nothing")
 
 class TwodEnsemble(DartLabPlot):
+    """
+    Extends the DartLabPlot class to create a 2D ensemble interactive plot.
+    """
 
     def __init__(self, fig, ax1, ax2, ax3, ax4, mu, sigma, x_limits):
         super().__init__(fig, x_limits)
@@ -303,6 +336,9 @@ class TwodEnsemble(DartLabPlot):
             plt.draw()  # Update the plot with the new point
 
 class OnedEnsemble(DartLabPlot):
+    """
+    Extends the DartLabPlot class to create a 1D ensemble interactive plot.
+    """
     def __init__(self, fig, ax1, mu, sigma, x_limits, y_limits):
         super().__init__(fig, x_limits)
         self.ax1 = ax1
@@ -397,6 +433,9 @@ class OnedEnsemble(DartLabPlot):
 
 
 class Lorenz96(DartLabPlot):
+    """
+    Extends the DartLabPlot class to create a Lorenz96 interactive plot.
+    """
     def __init__(self, fig, ax1, ax2, ax3, ax4):
         x_limits = [0, 10]
         super().__init__(fig, x_limits)
