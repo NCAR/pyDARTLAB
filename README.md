@@ -1,14 +1,13 @@
-# DartLabPlot
+# pyDARTLAB
 
-DartLabPlot is a python library designed for creating and managing interactive plots for the DARTLAB tutorial.
+pyDARTLAB is a python library designed for creating and managing interactive plots for the DARTLAB tutorial.
 
 
-![Example twod](docs/images/two_example.png "twod_ensemble")
+![Example twod](https://github.com/NCAR/pyDARTLAB/blob/main/docs/images/two_example.png?raw=true "twod_ensemble")
 
 
 ## Example usage
-
-![running twod_enesmble.py](docs/images/example_usage.png "example usage")
+![running twod_enesmble.py](https://github.com/NCAR/pyDARTLAB/blob/main/docs/images/example_usage.png?raw=true "example usage")
 
 
 ## Contributing
