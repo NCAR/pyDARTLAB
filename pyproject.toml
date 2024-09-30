@@ -17,7 +17,9 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "matplotlib==3.9.1"
+    "matplotlib>=3.9.1",
+    "jupyterlab>=4.2.4",
+    "ipympl>=0.9.4"
 ]
 
 [project.urls]
@@ -26,4 +28,4 @@ Issues = "https://github.com/NCAR/pyDARTLAB/issues"
 # Documentation = "https://ncar.github.io/pyDARTLAB"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/pyDARTLAB"]
+packages = ["src/pydartlab"]
