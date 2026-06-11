@@ -4,28 +4,54 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pydartlab"
-version = "0.0.1"
+version = "0.1.0.dev0"
 authors = [
   { name="Helen Kershaw", email="hkershaw@ucar.edu" },
 ]
-description = "A python version of DARTLAB"
+description = "A python version of DART_LAB: interactive ensemble data assimilation teaching tools"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "matplotlib>=3.9.1",
-    "jupyterlab>=4.2.4",
-    "ipympl>=0.9.4"
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "matplotlib>=3.7",
+    "ipywidgets>=8.0",
+    "ipympl>=0.9",
+]
+
+[project.optional-dependencies]
+tutorial = [
+    "jupyterlab>=4.0",
+]
+dev = [
+    "pytest>=7.0",
+    "ruff",
+    "nbformat",
+    "nbclient",
+    "ipykernel",
 ]
 
 [project.urls]
 Homepage = "https://github.com/NCAR/pyDARTLAB"
 Issues = "https://github.com/NCAR/pyDARTLAB/issues"
-# Documentation = "https://ncar.github.io/pyDARTLAB"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/pydartlab"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "NPY", "UP"]
+ignore = [
+    "E501",  # long lines in ported algorithm comments
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
