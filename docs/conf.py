@@ -6,13 +6,8 @@
 import os
 import sys
 
-# Add the path to modules and all subdirectories recursively
 src_path = os.path.abspath('../src')
 sys.path.insert(0, src_path)
-
-for root, dirs, files in os.walk(src_path):
-    for dir in dirs:
-        sys.path.insert(0, os.path.join(root, dir))
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
@@ -20,7 +15,7 @@ for root, dirs, files in os.walk(src_path):
 project = 'pydartlab'
 copyright = '2024, University Corporation for Atmospheric Research'
 author = 'Helen Kershaw'
-release = '0.0.1'
+release = '0.1.0'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -47,7 +42,7 @@ html_theme_options = {
     'sidebar_width': '325px',
     'page_width': '1200px',
     'show_powered_by' : 'false',
-    'description': 'A Python library for obsevation space diagnostics for the Data Assimilation Research Testbed (DART).',
+    'description': 'A Python version of DART_LAB, the interactive ensemble data assimilation tutorial from the Data Assimilation Research Testbed (DART).',
     'caption_font_size': '1.5em',
 }
 
@@ -58,4 +53,7 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.todo',
 ]
+
+# Widget/plotting dependencies are not needed to build the docs
+autodoc_mock_imports = ['ipywidgets', 'ipympl']
 
