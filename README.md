@@ -63,6 +63,18 @@ python -m pytest
 ruff check src tests
 ```
 
+Notebook outputs are kept out of version control with
+[nbstripout](https://github.com/kynan/nbstripout). After cloning, enable the
+filter once:
+
+```bash
+pip install nbstripout
+nbstripout --install --attributes .gitattributes
+git config filter.nbstripout.extrakeys metadata.language_info
+```
+
+Running the tutorial notebooks then never shows up as a change in git.
+
 The test suite includes golden-file comparisons against the MATLAB
 DART_LAB private functions. To (re)generate the reference data, run
 `tests/matlab_reference/generate_reference.m` in MATLAB once; the resulting
