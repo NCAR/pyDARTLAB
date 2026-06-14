@@ -8,6 +8,8 @@ of Jupyter notebooks, so the whole tutorial can be done in a notebook.
 
 ![Example twod](https://github.com/NCAR/pyDARTLAB/blob/main/docs/images/two_example.png?raw=true "twod_ensemble")
 
+Documentation is online at https://ncar.github.io/pyDARTLAB
+
 ## Installation
 
 ```bash
