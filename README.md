@@ -10,6 +10,8 @@ of Jupyter notebooks, so the whole tutorial can be done in a notebook.
 
 Documentation is online at https://ncar.github.io/pyDARTLAB
 
+Disclaimer: This is a project to explore using Claude - the AI tool. 
+
 ## Installation
 
 ```bash
