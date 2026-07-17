@@ -1,3 +1,5 @@
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NCAR/pyDARTLAB/HEAD?urlpath=%2Fdoc%2Ftree%2Fnotebooks%2F00_getting_started.ipynb)
+
 # pyDARTLAB
 
 pyDARTLAB is a Python version of [DART_LAB](https://docs.dart.ucar.edu/en/latest/guide/DART_LAB/DART_LAB.html),
@@ -9,6 +11,9 @@ of Jupyter notebooks, so the whole tutorial can be done in a notebook.
 ![Example twod](https://github.com/NCAR/pyDARTLAB/blob/main/docs/images/two_example.png?raw=true "twod_ensemble")
 
 Documentation is online at https://ncar.github.io/pyDARTLAB
+
+You can try the notebooks online with Binder: [pyDARTLABbinder](https://mybinder.org/v2/gh/NCAR/pyDARTLAB/HEAD?urlpath=%2Fdoc%2Ftree%2Fnotebooks%2F00_getting_started.ipynb)
+
 
 Disclaimer: This is a project to explore using Claude - the AI tool. 
 
