@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pydartlab"
-version = "0.1.0.dev0"
+version = "0.1.0"
 authors = [
   { name="Helen Kershaw", email="hkershaw@ucar.edu" },
 ]
