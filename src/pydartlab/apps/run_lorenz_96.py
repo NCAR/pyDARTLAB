@@ -25,12 +25,13 @@ class RunLorenz96App(DartLabApp):
         self.seed = seed
 
         nrows = 3 if adaptive else 2
-        self.fig = make_figure(figsize=(9, 2.6 * nrows))
-        gs = self.fig.add_gridspec(nrows, 2, hspace=0.5, wspace=0.25)
-        self.ax_state = self.fig.add_subplot(gs[0, 0])
-        self.ax_err = self.fig.add_subplot(gs[0, 1])
-        self.ax_prior_rank = self.fig.add_subplot(gs[1, 0])
-        self.ax_post_rank = self.fig.add_subplot(gs[1, 1])
+        self.fig = make_figure(figsize=(12, 3.5 * nrows))
+        # 3 columns: left side split for histograms, right side for circular state plot
+        gs = self.fig.add_gridspec(nrows, 3, hspace=0.4, wspace=0.35, width_ratios=[1, 1, 2])
+        self.ax_err = self.fig.add_subplot(gs[0, 0:2])  # Top left, spans 2 columns
+        self.ax_prior_rank = self.fig.add_subplot(gs[1, 0])  # Bottom left
+        self.ax_post_rank = self.fig.add_subplot(gs[1, 1])  # Bottom right
+        self.ax_state = self.fig.add_subplot(gs[0:2, 2], projection='polar')  # Right side, spans 2 rows
         self.ax_inflation = self.fig.add_subplot(gs[2, :]) if adaptive else None
 
         self.step_button = self.button("Advance Model", self.single_step,
@@ -48,8 +49,6 @@ class RunLorenz96App(DartLabApp):
         self.inflation = self.float_field(1.0, "Inflation:", minimum=0.0)
         self.forcing = self.float_field(8.0, "Forcing:", step=0.5, minimum=4.0)
 
-        items = [self.step_button, self.play, self.filter_dd, self.ens_size,
-                 self.localization, self.inflation, self.forcing]
         if adaptive:
             self.inf_mode = widgets.RadioButtons(
                 options=["Fixed Inflation", "Adaptive Inflation"],
@@ -61,15 +60,23 @@ class RunLorenz96App(DartLabApp):
             self.inf_min = self.float_field(1.0, "Inf min:", minimum=0.0)
             self.obs_network = widgets.Dropdown(options=list(OBS_NETWORKS),
                                                 description="Obs network:")
-            items += [self.inf_mode, self.inf_flavor, self.inf_damping,
-                      self.inf_sd, self.inf_min, self.obs_network]
 
         reset_btn = self.button("Reset", self.reset)
+        clear_hist_btn = self.button("Clear Histograms", self.clear_histograms)
         self.time_html = widgets.HTML()
-        items += [reset_btn, self.time_html, self.status]
-        controls = widgets.VBox(items)
+        
+        # Arrange controls horizontally across the top
+        row1 = widgets.HBox([self.step_button, self.play, self.filter_dd, self.ens_size])
+        row2 = widgets.HBox([self.localization, self.inflation, self.forcing, reset_btn, clear_hist_btn])
+        if adaptive:
+            row3 = widgets.HBox([self.inf_mode, self.inf_flavor, self.inf_damping])
+            row4 = widgets.HBox([self.inf_sd, self.inf_min, self.obs_network])
+            controls = widgets.VBox([row1, row2, row3, row4, self.time_html, self.status])
+        else:
+            controls = widgets.VBox([row1, row2, self.time_html, self.status])
+        
         canvas = self.fig.canvas if isinstance(self.fig.canvas, widgets.Widget) else None
-        self.widget = widgets.HBox([canvas, controls] if canvas else [controls])
+        self.widget = widgets.VBox([controls, canvas] if canvas else [controls])
         self.reset()
 
     # ---- experiment wiring --------------------------------------------
@@ -91,6 +98,12 @@ class RunLorenz96App(DartLabApp):
                              "perturbations to grow (spin-up).")
         self.fig.canvas.draw_idle()
 
+    def clear_histograms(self):
+        """Clear the rank histogram data."""
+        self.experiment.prior_rank_hist.reset()
+        self.experiment.post_rank_hist.reset()
+        self.redraw()
+        
     def _push_config(self):
         exp = self.experiment
         exp.filter_type = self.filter_dd.value
@@ -126,14 +139,22 @@ class RunLorenz96App(DartLabApp):
         ax = self.ax_state
         ax.clear()
         ax.set_title("State (truth black, ensemble green)", fontsize=10)
+        # Convert indices to angles (0 to 2π) for circular plot
+        theta = 2 * np.pi * idx / exp.model_size
         for member in exp.prior:
-            ax.plot(idx, member, color=colors.prior, lw=0.5)
-        ax.plot(idx, exp.truth, color=colors.truth, lw=2)
-        if getattr(exp, "last_obs", None) is not None and not exp.ready_to_advance:
-            pass  # obs drawn only right after an assimilation
+            # Close the circle by adding the first point at the end
+            theta_plot = np.append(theta, theta[0])
+            member_plot = np.append(member, member[0])
+            ax.plot(theta_plot, member_plot, color=colors.prior, lw=0.5)
+        truth_plot = np.append(exp.truth, exp.truth[0])
+        ax.plot(np.append(theta, theta[0]), truth_plot, color=colors.truth, lw=2)
         if not np.all(np.isnan(getattr(exp, "last_obs", np.full(1, np.nan)))):
-            ax.plot(idx, exp.last_obs, "*", color=colors.observation, markersize=6)
-        ax.set_xlabel("State variable")
+            # Plot observations at their corresponding angles
+            obs_idx = np.where(~np.isnan(exp.last_obs))[0]
+            obs_theta = 2 * np.pi * obs_idx / exp.model_size
+            ax.plot(obs_theta, exp.last_obs[obs_idx], "*", color=colors.observation, markersize=6)
+        # Set radial limits for better visualization
+        ax.set_ylim(bottom=exp.truth.min() - 2, top=exp.truth.max() + 2)
 
         ax = self.ax_err
         ax.clear()
