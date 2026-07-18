@@ -1,0 +1,16 @@
+name: default-environment
+channels:
+  - https://prefix.dev/emscripten-forge-4x
+  - https://prefix.dev/conda-forge
+dependencies:
+  # A Jupyter kernel for Python
+  - xeus-python
+  # A Jupyter kernel for R
+  # - xeus-r
+  # A Jupyter kernel for C++
+  # - xeus-cpp
+  - scipy
+  - numpy>=1.10
+  - matplotlib>=3.7
+  - pip:
+    - pydartlab>=0.1.0
