@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Kershaw"
+  given-names: "Helen"
+  orcid: "https://orcid.org/0009-0002-3755-9978"
+title: "pyDARTLAB"
+date-released: 2026-07-20
+url: "https://github.com/NCAR/pyDARTLAB"
