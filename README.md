@@ -1,4 +1,4 @@
-[![notebook-link](https://img.shields.io/badge/notebook-link-e2d610?logo=jupyter&logoColor=white)](https://notebook.link/github/NCAR/pyDARTLAB/?path=notebooks)
+[![notebook-link](https://img.shields.io/badge/notebook-link-e2d610?logo=jupyter&logoColor=white)](https://notebook.link/github/NCAR/pyDARTLAB/tree/main/notebooks)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NCAR/pyDARTLAB/HEAD?urlpath=%2Fdoc%2Ftree%2Fnotebooks%2F00_getting_started.ipynb)
 
 # pyDARTLAB
@@ -14,7 +14,7 @@ of Jupyter notebooks, so the whole tutorial can be done in a notebook.
 Documentation is online at https://ncar.github.io/pyDARTLAB
 
 You can try the notebooks online with Notebook.link or Binder:  
-[![notebook-link](https://img.shields.io/badge/notebook-link-e2d610?logo=jupyter&logoColor=white)](https://notebook.link/github/NCAR/pyDARTLAB/?path=notebooks)
+[![notebook-link](https://img.shields.io/badge/notebook-link-e2d610?logo=jupyter&logoColor=white)](https://notebook.link/github/NCAR/pyDARTLAB/tree/main/notebooks)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NCAR/pyDARTLAB/HEAD?urlpath=%2Fdoc%2Ftree%2Fnotebooks%2F00_getting_started.ipynb)
 
 
